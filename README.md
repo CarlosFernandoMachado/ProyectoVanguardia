@@ -1,3 +1,4 @@
 # ProyectoVanguardia
 
-#### npm i express mongoose morgan multer dotenv cross-env cors
+#### npm i express cors body-parser
+#### npm i -D nodemon
