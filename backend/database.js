@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-console.log(process.env.MONGODB_URI);
-
-mongoose.connect(process.env.MONGODB_URI,{
+mongoose.connect('mongodb://localhost/datadb',{
     useNewUrlParser: true
 })
     .then(db => console.log('Database connected successfully'))
