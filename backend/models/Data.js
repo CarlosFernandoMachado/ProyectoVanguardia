@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const BooSchema = new Schema({
+const DataSchema = new Schema({
     distance: { type: String, required: true },
     sensor: { type: String, required: true},
     date_created: { type: Date, default: Date.now}
