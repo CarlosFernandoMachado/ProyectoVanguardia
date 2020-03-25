@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const multer = require('multer');
 const path = require('path');
 
-//inicializations
+//inicializations.
 const app = express();
 require('./database');
 
