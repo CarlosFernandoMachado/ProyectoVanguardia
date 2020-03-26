@@ -1,38 +1,16 @@
-if(process.envNODE_ENV !== 'production'){
-    require('dotenv').config();
-}
-
 const express = require('express');
-const morgan = require('morgan');
-const multer = require('multer');
-const path = require('path');
+const cors = require('cors');
 
-//inicializations.
 const app = express();
-require('./database');
 
-//settings
-app.set('port',process.env.PORT || 3000);
-
-//middlewares
-app.use(morgan('dev'));
-const storage = multer.diskStorage({
-    destination: path.join(__dirname,'public/uploads'),
-    filename(req, file, cb){
-        cb(null, new Date().getTime() + path.extname(file.originalname));
-    }
-})
-app.use(multer({storage}).single('image'));
-app.use(express.urlencoded({extended: false}));
+//middleware
 app.use(express.json());
+app.use(cors());
 
-//routes
-app.use('/api/data',require('./routes/data'));
+const posts = require('./routes/api/posts');
 
-//static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api/posts', posts);
 
-//start the server
-app.listen(app.get('port'), () => {
-    console.log('Server on port',app.get('port'));
-});
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log('server started'));
