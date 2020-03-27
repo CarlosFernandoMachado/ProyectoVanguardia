@@ -18,9 +18,9 @@ class PostService{
         }
     }
     //create posts
-    static insertPost(text){
+    static insertPost(data){
         return axios.post(url,{
-            text
+            data
         });
     }
 

@@ -1,6 +1,18 @@
 <template>
   <div>
+    <div class = "container">
+      <div class="form-group">
+        <input 
+        type="file" 
+        class="form-control-file border" 
+        name="file"
+        id = "archivo"
+        v-on:input = "archivo = $event.target.value"
+        >
+      </div>
+    </div>
     <h1>Posts</h1>
+      <button v-on:click = "leer">boton</button>
       <hr>
       <p class="error" v-if="error">{{ error }}</p>
       <div class="post-container">
@@ -26,7 +38,8 @@ export default {
     return{
       posts:[],
       error: '',
-      text: ''
+      text: '',
+      archivo: ''
     }
   },
   async created(){
@@ -35,12 +48,31 @@ export default {
     } catch (err) {
       this.error = err.message;
     }
+  }, 
+  methods:{
+    leer(){
+      const input = document.querySelector('input[type = "file"]');
+      const reader = new FileReader();
+      reader.onload = function(){
+        const a = reader.result.split(',');
+        for(var i = 0; i < a.length; i++){
+          var token = a[i];
+          //this.createPost(token);
+          PostService.insertPost(token);
+          this.posts = PostService.getPosts();
+        }
+      }
+      reader.readAsText(input.files[0]);
+    },
+    async createPost(){
+      await PostService.insertPost("a");
+      this.posts = await PostService.getPosts();
+    }
   }
   
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>
