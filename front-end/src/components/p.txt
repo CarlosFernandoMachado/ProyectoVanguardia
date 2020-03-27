@@ -1,1 +1,1 @@
-up,down,left
+up1,down2,left3

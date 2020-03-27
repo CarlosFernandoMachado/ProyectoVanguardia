@@ -8,7 +8,7 @@ class PostService{
         const res = await axios.get(url)
         try {
           const data = res.data
-          console.log(data);
+          //console.log(data);
           return data.map(post => ({
             ...post,
             created_at: new Date(post.created_at)

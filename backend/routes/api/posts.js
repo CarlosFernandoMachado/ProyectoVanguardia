@@ -16,7 +16,7 @@ router.post('/', async (req,res) => {
         data: req.body.data,
         created_at: new Date() 
     });
-    res.status(201).send();
+    res.status(200).send();
 });
 
 //delete post
