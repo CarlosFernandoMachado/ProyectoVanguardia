@@ -38,9 +38,14 @@
     <!-- Button to Open the Modal -->
     <div class = "container">
       <br><br>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Seleccionar archivo
-      </button>
+      <div class = "row">
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "Up">Up</button></div>
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "Down">Down</button></div>
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "Right">Right</button></div>
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "Left">Left</button></div>
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "Stop">Stop</button></div>
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "leer">Save</button></div>
+      </div>
     </div>
 
     <!-- Table -->
@@ -67,6 +72,12 @@
         </tbody>
       </table>
     </div>
+    <div class = "container">
+      <div class = "row">
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "Siguiente">Siguiente</button></div>
+        <div class = "col-sm-1"><button type="button" class="btn btn-primary" v-on:click = "Anterior">Anterior</button></div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -81,7 +92,8 @@ export default {
       posts:[],
       error: '',
       text: '',
-      archivo: ''
+      archivo: '',
+      cadena: ''
     }
   },
   async created(){
@@ -93,7 +105,7 @@ export default {
   }, 
   methods:{
     leer(){
-      const input = document.querySelector('input[type = "file"]');
+      /*const input = document.querySelector('input[type = "file"]');
       const reader = new FileReader();
       var _this = this;
       reader.onload = function(){
@@ -103,7 +115,41 @@ export default {
           _this.createPost(token);
         }
       }
-      reader.readAsText(input.files[0]);
+      reader.readAsText(input.files[0]);*/
+      
+      var file = new File([this.cadena], "comandos.txt", {type:"text/pain;charset=utf-8"});
+      var url = window.URL.createObjectURL(file);
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.href = url;
+      a.innerHTML = "Descargar archivo";
+      a.download = file.name;
+      const c = this.cadena.split("\n");
+      for(var i = 0; i < c.length-1; i++){
+        var token = c[i];
+        this.createPost(token);
+      }
+      this.cadena = '';
+    },
+    Up(){
+      this.cadena += "UP\n";
+      console.log(this.cadena);
+    },
+    Down(){
+      this.cadena += "Down\n";
+      console.log(this.cadena);
+    },
+    Right(){
+      this.cadena += "Right\n";
+      console.log(this.cadena);
+    },
+    Left(){
+      this.cadena += "Left\n";
+      console.log(this.cadena);
+    },
+    Stop(){
+      this.cadena += "Stop\n";
+      console.log(this.cadena);
     },
     async createPost(token){
       await PostService.insertPost(token);
